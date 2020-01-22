@@ -1,0 +1,23 @@
+body {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+#rest {
+    border: 1px solid #000;
+    height: 25vh;
+    width: 10vw;
+    padding: 0 15px;
+}
+
+#submit {
+    margin: 10px 0;
+}
+
+p {
+    margin: 0;
+    margin-top: 5px;
+}

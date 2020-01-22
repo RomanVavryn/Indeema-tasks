@@ -1,20 +1,12 @@
-// Написати форму для вирахування решти при внесенні певної суми і ціни
-// товару. У формі створити поля: “Сума” (де користувач вводить суму
-// грошей, яку він віддає) та “Ціна” (де користувач вводить ціну товарів,
-// що купує). При натисканні на кнопку “Повернути решту” - скріпт
-// повинен вираховувати скільки здачі буде на 1 цент, 5 центів, 10 центів,
-// 25 центів, 50 центів і долари. Наприклад, при внесенні 3.14 долари і ціна
-// товару 0.99 долара, повинно повернути “Ваша решта: 2 долари, 15
-// центів.” (по номіналу 2 долари, 10 центів, 5 центів.)
 'use strict';
 
 // get submit btn
 let sumbitBtn = document.getElementById('submit');
 
 // add event listener
-sumbitBtn.addEventListener('click', culc)
+sumbitBtn.addEventListener('click', calc)
 
-function culc(event) {
+function calc(event) {
     // cancel btn submit event
     event.preventDefault();
 
@@ -28,111 +20,97 @@ function culc(event) {
     sum = sum.toFixed(2);
     price = price.toFixed(2)
 
-    // if invalid sum/price
+    // invalid if sum < price
     if ((sum - price) < 0) {
         return
     }
 
     // rest
     let rest = sum - price;
-    console.log(rest.toFixed(2))
-        // convert rest
+    // convert rest
     rest = rest.toFixed(2);
-    // rest in dolars 
+    // rest without the fractional part
     let dolars = Math.trunc(rest);
-    // get fractional part
+    // fractional part
     let cents = Number((rest % 1).toFixed(2));
-    // cent for rest
+    // cents constants
     const cent_50 = 0.50;
     const cent_25 = 0.25;
     const cent_10 = 0.10;
     const cent_05 = 0.05;
     const cent_01 = 0.01;
-    // cent in fractional part
+    // cents in fractional part
     let rest_c50 = 0;
     let rest_c25 = 0;
     let rest_c10 = 0;
     let rest_c05 = 0;
     let rest_c01 = 0;
 
+    // calc what cents should be returned
     for (let i = 0; i < 100; i++) {
-        // console.log(cents)
         // if cents not left
         if (cents <= 0) {
             return
         }
 
+        // how many 50 cents must be returned
         if ((cents - cent_50) >= 0) {
             cents = cents - cent_50 + 0.0001;
-            // cents = Math.trunc(cents);
-            rest_c50++
+            rest_c50++;
             continue;
         }
-
+        // how many 25 cents must be returned
         if ((cents - cent_25) >= 0) {
             cents = cents - cent_25 + 0.0001;
-            // cents = Math.trunc(cents);
-            rest_c25++
+            rest_c25++;
             continue;
         }
-
+        // how many 10 cents must be returned
         if ((cents - cent_10) >= 0) {
             cents = cents - cent_10 + 0.0001;
-            // cents = Math.trunc(cents);
-            rest_c10++
+            rest_c10++;
             continue;
         }
-
+        // how many 05 cents must be returned
         if ((cents - cent_05) >= 0) {
             cents = cents - cent_05 + 0.0001;
-            // cents = Math.trunc(cents);
-            rest_c05++
+            rest_c05++;
             continue;
         }
-
+        // how many 01 cents must be returned
         if ((cents - cent_01) >= 0) {
             cents = cents - cent_01 + 0.0001;
-            // cents = Math.trunc(cents);
-            rest_c01++
+            rest_c01++;
             continue;
         }
 
     }
 
-    // show rest 
-    console.clear();
-
+    // show/return - rest/result
+    // get result div
+    let result = document.getElementById('rest');
+    // reset previous result
+    result.innerText = '';
+    // show result
+    result.innerHTML += `<p>Your rest: ${rest}</p>`;
+    // show if there are cents to return
     if (dolars > 0) {
-        console.log(dolars);
-        console.log('dolars');
+        result.innerHTML += `<p>${dolars} - dolars</p>`;
     }
     if (rest_c50 > 0) {
-        console.log(rest_c50);
-        console.log('50 censt');
+        result.innerHTML += `<p>${rest_c50} - 50 cents</p>`;
     }
     if (rest_c25 > 0) {
-        console.log(rest_c25);
-        console.log('25 censt');
+        result.innerHTML += `<p>${rest_c25} - 25 cents</p>`;
     }
     if (rest_c10 > 0) {
-        console.log(rest_c10);
-        console.log('10 censt');
+        result.innerHTML += `<p>${rest_c10} - 10 cents</p>`;
     }
     if (rest_c05 > 0) {
-        console.log(rest_c05);
-        console.log('05 censt');
+        result.innerHTML += `<p>${rest_c05} - 5 cents</p>`;
     }
     if (rest_c01 > 0) {
-        console.log(rest_c01);
-        console.log('01 censt');
+        result.innerHTML += `<p>${rest_c01} - 1 cents</p>`;
     }
-
-
-
-
-
-
-
-
 
 }
