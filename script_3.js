@@ -53,11 +53,11 @@ function editRow(item) {
     let elem_key_text = elem_key.innerHTML;
     let elem_value_text = elem_value.innerHTML;
 
-    // edit button disabled on
+    // edit button disabled
     let currentBtn = item.target;
     currentBtn.setAttribute('disabled', '');
 
-    // create inputs to add inside 
+    // create inputs
     let editInputKey = document.createElement('input');
     editInputKey.setAttribute('type', 'text');
     editInputKey.setAttribute('class', 'editing');
@@ -76,22 +76,50 @@ function editRow(item) {
     function finEditing(item) {
         if (item.key === 'Enter' && item.target.value.trim() !== '') {
 
-            //  new text
+            //  get new text
             let newText = item.target.value;
+
+            // validation email
+            // get valid key text
+            let v1 = item.path[2].cells[0].firstChild.value; // valid in state editing (input)
+            let v2 = item.path[2].cells[0].innerHTML; // valid in state normal (text)
+            // if v1 === undefind 
+            if (!v1) {
+                v1 = v2;
+            }
+            // valid email?
+            if (v1.toLowerCase() === 'email') {
+                // get valid email text
+                let emailv1 = item.path[2].cells[1].firstChild.value;
+                let emailv2 = item.path[2].cells[1].innerHTML;
+                if (!emailv1) {
+                    emailv1 = emailv2;
+                }
+                // if validation fails return (or not stop editing)
+                if (!validateEmail(emailv1.trim())) {
+                    return
+                }
+            }
+
+            // validation fn
+            function validateEmail(email) {
+                let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                return re.test(String(email).toLowerCase());
+            }
 
             // add new text
             item.path[1].innerHTML = newText;
         }
 
-        //  es
+        //  if editing done 
         if (item.path[2].cells[1].innerHTML.length < 40 && item.path[2].cells[0].innerHTML.length < 40) {
-            // edit button disabled off
+            // edit button (not) disabled 
             currentBtn.removeAttribute('disabled')
         }
 
     }
 
-    // reset key/value text
+    // delete key/value text before adding input
     elem_key.innerHTML = '';
     elem_value.innerHTML = '';
 
