@@ -57,6 +57,14 @@
         button {
             margin-left: 5px;
         }
+        
+        .btns {
+            width: 100px;
+        }
+        
+        .editing {
+            width: inherit;
+        }
     </style>
 
     <table>
@@ -72,43 +80,40 @@
             <tr>
                 <th>Name</th>
                 <td>Roman</td>
-                <td><button class="editbtn">edit</button><button class="delete">del</button></td>
+                <td class="btns"><button class="editbtn">edit</button><button class="delete">del</button></td>
 
             </tr>
             <tr>
                 <th>Surname</th>
                 <td>Vavrynkevych</td>
-                <td><button class="editbtn">edit</button><button class="delete">del</button></td>
+                <td class="btns"><button class="editbtn">edit</button><button class="delete">del</button></td>
             </tr>
             <tr>
                 <th>Email</th>
                 <td>roman.vavrun@gmail.com</td>
-                <td><button class="editbtn">edit</button><button class="delete">del</button></td>
+                <td class="btns"><button class="editbtn">edit</button><button class="delete">del</button></td>
             </tr>
         </tbody>
         <tfoot>
             <tr>
+                <td colspan='3'>
+                    <form action="#" method="post">
+                        <label for="Key">Key</label>
+                        <input type="text" id="Key">
+                        <label for="value">Value</label>
+                        <input type="text" id="value">
+                        <button type="submit">add</button>
+                    </form>
+                </td>
+            </tr>
+            <tr>
                 <th>Date</th>
-                <td id="dateTime"></td>
+                <td id="dateTime" colspan='2'></td>
             </tr>
         </tfoot>
     </table>
 
-    <form action="#" method="post">
-        <label for="input-type">Data type</label>
-        <select name="input-type" id="input-type">
-            <option value="text" selected>text</option>
-            <option value="email">email</option>
-            <option value="tel">tel</option>
-            <option value="number">number</option>
-            <option value="date">date</option>
-        </select>
-        <label for="Key">Key</label>
-        <input type="text" id="Key">
-        <label for="value">Value</label>
-        <input type="text" id="value">
-        <button type="submit">+</button>
-    </form>
+
     <!-- <script src="./script_2.js"></script> -->
     <script src="./script_3.js"></script>
 </body>
