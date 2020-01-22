@@ -5,10 +5,43 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Indeema Task 3</title>
+    <title>Indeema Task 1</title>
 </head>
 
 <body>
+    <style>
+        body {
+            /* margin: 0; */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        
+        #rest {
+            border: 1px solid #000;
+            height: 5vh;
+            width: 15vw;
+        }
+        
+        p {
+            margin: 0;
+            margin-top: 1vh;
+        }
+    </style>
+    <form action="#saddsa">
+        <label for="sum">Sum</label>
+        <br>
+        <input type="text" name="sum" id="sum">
+        <br>
+        <label for="price">Price</label>
+        <br>
+        <input type="text" name="price" id="price">
+        <br>
+        <button id="submit">Rest</button>
+        <p>Rest:</p>
+        <div id="rest"></div>
+    </form>
     <script src="./script_1.js"></script>
 </body>
 
