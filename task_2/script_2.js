@@ -38,7 +38,7 @@ let container = body.lastChild;
 // button 
 let open_button = document.createElement('button');
 // add text & styling
-open_button.innerHTML = 'Open Modal Window';
+open_button.innerText = 'Open Modal Window';
 open_button.style.fontFamily = 'Roboto';
 open_button.style.fontSize = '4vh'; // for responsive text
 // button size
@@ -126,7 +126,7 @@ function openModalWindow(item) {
     // button
     let close_btn = document.createElement('button');
     // add text & styling
-    close_btn.innerHTML = 'close';
+    close_btn.innerText = 'close';
     close_btn.style.fontFamily = 'Roboto';
     close_btn.style.fontSize = '2vh'; // for responsive text
     // button size
