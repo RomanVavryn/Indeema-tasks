@@ -1,5 +1,3 @@
-// * Реалізувати анімацію за допомогою CSS3 при відкриванні і закриванні
-// модального вікна (плавна поява і плавне закривання вікна) 
 'use strict';
 
 // body node
@@ -99,6 +97,7 @@ function openModalWindow(item) {
     modalWindow.style.width = '35vh';
     modalWindow.style.border = '1px solid #000';
     // else styles
+    modalWindow.classList.add('modal-window-animation');
     modalWindow.style.backgroundColor = randomColor();
     modalWindow.style.boxShadow = '0px 0px 7px 0px #000';
     modalWindow.style.display = 'flex';
@@ -139,7 +138,9 @@ function openModalWindow(item) {
 
     // delete parent node from dom 
     function closeModalWindow(item) {
-        item.path[1].remove()
+        modalWindow.classList.remove('modal-window-animation');
+        modalWindow.classList.add('modal-window-close-animation');
+        setTimeout(() => { item.path[1].remove() }, 1000);
     }
     // close (delete) modal window end -----
 

@@ -1,0 +1,47 @@
+/* open animation */
+
+.modal-window-animation {
+    animation: openWindow ease 1s;
+    animation-iteration-count: 1;
+    transform-origin: 50% 50%;
+    animation-fill-mode: forwards;
+}
+
+@keyframes openWindow {
+    0% {
+        opacity: 0;
+        transform: translate(0px, -25px);
+    }
+    100% {
+        opacity: 1;
+        transform: translate(0px, 0px);
+    }
+}
+
+
+/* close animation */
+
+.modal-window-close-animation {
+    animation: closeWindow linear 1s;
+    animation-iteration-count: 1;
+    transform-origin: 50% 50%;
+}
+
+@keyframes closeWindow {
+    0% {
+        opacity: 1;
+        transform: scaleX(1.00) scaleY(1.00);
+    }
+    25% {
+        opacity: 1;
+        transform: scaleX(0.95) scaleY(0.95);
+    }
+    50% {
+        opacity: 1;
+        transform: scaleX(1.10) scaleY(1.10);
+    }
+    100% {
+        opacity: 0;
+        transform: scaleX(0.30) scaleY(0.30);
+    }
+}
