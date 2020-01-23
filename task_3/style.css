@@ -18,6 +18,7 @@ td {
 
 table {
     width: 500px;
+    position: relative;
 }
 
 caption {
@@ -50,4 +51,14 @@ button {
 
 .editing {
     width: inherit;
+}
+
+.selected {
+    background-color: aqua;
+}
+
+.delete-all-btn {
+    position: absolute;
+    top: -30px;
+    right: 0;
 }

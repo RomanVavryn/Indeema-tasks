@@ -20,7 +20,7 @@ addDeleteFnToBtn();
 function addDeleteFnToBtn() {
     //  get all delete buttons
     let btnDeleteColection = document.getElementsByClassName('delete');
-    // convert from htmlcolection to array
+    // convert from htmlcollection to array
     let delBtn = [...btnDeleteColection];
     // add event listener to btns
     delBtn.map((item) => {
@@ -42,11 +42,11 @@ addEditinFnToBtn();
 function addEditinFnToBtn() {
     //  get all edit buttons
     let btnEditColection = document.getElementsByClassName('editbtn');
-    // convert from htmlcolection to array
+    // convert from htmlcollection to array
     let editBtn = [...btnEditColection];
     // add event listener to btns
     editBtn.map((item) => {
-        item.onclick = editRow
+        item.onclick = editRow;
     })
 }
 
@@ -194,6 +194,8 @@ function addNewItem(event) {
     let new_td = document.createElement('td');
     let new_td_btns = document.createElement('td')
 
+    // add tr class tr
+    new_tr.classList.add('tr');
     // add to tr - th tag with value 
     new_th.innerText = add_key.value;
     new_tr.append(new_th);
@@ -211,9 +213,72 @@ function addNewItem(event) {
     // add/reset listeners
     addDeleteFnToBtn();
     addEditinFnToBtn();
+    multipleSelect();
 
     // clear inputs
     add_key.value = '';
     add_value.value = '';
 }
 // add row end-----
+
+// multi select & delete -----
+// get table tag
+let tableTag = document.getElementsByTagName('table');
+// create delete selected elem btn
+let deleteAllBtn = document.createElement('button');
+deleteAllBtn.classList.add('delete-all-btn');
+deleteAllBtn.innerText = 'Del selected items';
+deleteAllBtn.setAttribute('hidden', '');
+tableTag[0].append(deleteAllBtn);
+
+multipleSelect();
+
+function multipleSelect() {
+    // get all tr elem
+    let tr_colection = document.getElementsByClassName('tr');
+    // convert from HTMLcollection to arr
+    let tr_list = [...tr_colection];
+    // add event listener to btns
+    tr_list.map((item) => {
+        item.onclick = multiSelect;
+    })
+
+    function multiSelect(item) {
+        // item validation
+        if (item.path[1].classList.contains('tr')) {
+            item.path[1].classList.toggle('selected');
+        }
+
+        //if there are selected items
+        btnDeleteSelectedItems();
+    }
+
+    // show btn delete selected items
+    function btnDeleteSelectedItems() {
+        // get all selected elem
+        let selectedItems = document.getElementsByClassName('selected');
+        // add to btn delete fn
+        deleteAllBtn.onclick = DeleteAllItems;
+
+        // if there are selected items
+        if (selectedItems.length) {
+            // show btn
+            deleteAllBtn.removeAttribute('hidden')
+        } else {
+            // hide btn
+            deleteAllBtn.setAttribute('hidden', '');
+        }
+
+        // deleteting selected items
+        function DeleteAllItems() {
+            // conver selected items list to arr  
+            let selectedItemslist = [...selectedItems];
+            // deleting items
+            selectedItemslist.map(item => {
+                item.remove();
+            })
+            deleteAllBtn.setAttribute('hidden', '');
+        }
+    }
+}
+// multi select & delete end-----
