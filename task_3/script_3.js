@@ -1,12 +1,4 @@
-// Написати таблицю, де можна додавати дані через форму, редагувати дані
-// і видаляти будь-який рядок (row). Таблиця повинна містити наступні
-// поля: ім’я, прізвище, електронну адресу. Повинна бути валідація
-// поля’’e-mail.’’ і дата створення має генеруватися автоматично.
 // * Реалізувати можливість виділяти декілька рядків і видаляти їх.
-
-// add form - add email validate fn 
-// move to another folder
-// make html,css by js 
 'use strict';
 
 // Time -----
@@ -14,12 +6,12 @@
 let today = new Date();
 let date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate(); // Y-M-D
 let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds(); // H-M-S
-let dateTime = date + ' ' + time; // full time Y-M-D - H-M-S
+let dateTime = date + ' ' + time; // full time Y-M-D : H-M-S
 
 // add time to table 
 let tableDate = document.getElementById('dateTime');
 tableDate.innerText = dateTime;
-// Time -----
+// Time end-----
 
 // Delete fn -----
 // add listener for delete btn
@@ -30,7 +22,7 @@ function addDeleteFnToBtn() {
     let btnDeleteColection = document.getElementsByClassName('delete');
     // convert from htmlcolection to array
     let delBtn = [...btnDeleteColection];
-
+    // add event listener to btns
     delBtn.map((item) => {
         item.onclick = deleteRow
     })
@@ -40,10 +32,10 @@ function addDeleteFnToBtn() {
         item.path[2].remove()
     }
 }
-// Delete fn -----
+// Delete fn end-----
+
 
 // edit row -----
-
 // add listener for edit btn
 addEditinFnToBtn();
 
@@ -52,6 +44,7 @@ function addEditinFnToBtn() {
     let btnEditColection = document.getElementsByClassName('editbtn');
     // convert from htmlcolection to array
     let editBtn = [...btnEditColection];
+    // add event listener to btns
     editBtn.map((item) => {
         item.onclick = editRow
     })
@@ -88,20 +81,21 @@ function editRow(item) {
 
     // finishing editing
     function finEditing(item) {
+        // check if input is empty
         if (item.key === 'Enter' && item.target.value.trim() !== '') {
 
             //  get new text
             let newText = item.target.value;
 
-            // validation email
+            // validation email -----
             // get valid key text
-            let v1 = item.path[2].cells[0].firstChild.value; // valid in state editing (input)
-            let v2 = item.path[2].cells[0].innerText; // valid in state normal (text)
+            let v1 = item.path[2].cells[0].firstChild.value; // valid if key is input
+            let v2 = item.path[2].cells[0].innerText; // valid if key is text
             // if v1 === undefind 
             if (!v1) {
                 v1 = v2;
             }
-            // valid email?
+            // is valid email? - check email
             if (v1.toLowerCase() === 'email' || v1.toLowerCase() === 'e-mail') {
                 // get valid email text
                 let emailv1 = item.path[2].cells[1].firstChild.value;
@@ -109,7 +103,7 @@ function editRow(item) {
                 if (!emailv1) {
                     emailv1 = emailv2;
                 }
-                // if validation fails return (or not stop editing)
+                // if validation fails return (don't stop editing)
                 if (!validateEmail(emailv1.trim())) {
                     return
                 }
@@ -120,17 +114,17 @@ function editRow(item) {
                 let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
                 return re.test(String(email).toLowerCase());
             }
+            // validation email end-----
 
             // add new text
             item.path[1].innerText = newText;
         }
 
-        //  if editing done 
+        // if input not empty & editing done 
         if (item.path[2].cells[1].innerHTML.length < 40 && item.path[2].cells[0].innerHTML.length < 40) {
-            // edit button (not) disabled 
+            // edit button not disabled 
             currentBtn.removeAttribute('disabled')
         }
-
     }
 
     // delete key/value text before adding input
@@ -141,7 +135,7 @@ function editRow(item) {
     elem_key.append(editInputKey);
     elem_value.append(editInputValue);
 }
-// edit row -----
+// edit row end-----
 
 
 // add row -----
@@ -158,27 +152,41 @@ add_brn.addEventListener('click', addNewItem);
 
 // add btn disabled
 add_brn.setAttribute('disabled', '');
+// add event listeners
 add_key.onkeyup = inputNotEmpty;
 add_value.onkeyup = inputNotEmpty;
 
 function inputNotEmpty() {
-
     // check if inputs are empty
     if (add_key.value.trim() === '' || add_value.value.trim() === '') {
         add_brn.setAttribute('disabled', '');
         return
     }
 
+    // email validation -----
+    // is valid email? - check email
+    if (add_key.value.trim().toLowerCase() === 'email' || add_key.value.trim().toLowerCase() === 'e-mail') {
+        // if validation fails return (don't stop editing)
+        if (!validateEmail(add_value.value.trim())) {
+            add_brn.setAttribute('disabled', '');
+            return
+        }
+    }
+
+    // validation fn
+    function validateEmail(email) {
+        let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(String(email).toLowerCase());
+    }
+    // email validation end-----
+
     // add button (not) disabled 
     add_brn.removeAttribute('disabled')
 }
 
-function addNewItem() {
-
-    // check if inputs are empty
-    if (add_key.value.trim() === '' || add_value.value.trim() === '') {
-        return
-    }
+function addNewItem(event) {
+    // cancel button sumbit action
+    event.preventDefault();
 
     //  create row structure
     let new_tr = document.createElement('tr');
@@ -192,7 +200,7 @@ function addNewItem() {
     // add to tr - td tag with value 
     new_td.innerText = add_value.value;
     new_tr.append(new_td);
-    // add to tr - td with buttons 
+    // add to tr - td with buttons using innerHTML 
     new_td_btns.setAttribute('class', 'btns');
     new_td_btns.innerHTML = '<td class="btns"><button class="editbtn">edit</button><button class="delete">del</button></td>';
     new_tr.append(new_td_btns);

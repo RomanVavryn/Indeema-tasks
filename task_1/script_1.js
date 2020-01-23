@@ -27,7 +27,6 @@ function calc(event) {
 
     // rest
     let rest = sum - price;
-    // convert rest
     rest = rest.toFixed(2);
     // rest without the fractional part
     let dolars = Math.trunc(rest);
@@ -83,7 +82,6 @@ function calc(event) {
             rest_c01++;
             continue;
         }
-
     }
 
     // show/return - rest/result
@@ -112,5 +110,4 @@ function calc(event) {
     if (rest_c01 > 0) {
         result.innerHTML += `<p>${rest_c01} - 1 cents</p>`;
     }
-
 }

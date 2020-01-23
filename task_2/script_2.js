@@ -1,15 +1,5 @@
-// Написати власну імплементацію модального вікна. Створити HTML
-// сторінку з кнопкою “Open Modal Window”, після натискання на кнопкуповинно з’являтись модальне вікно (HTML модального вікна повинен
-// автоматично генеруватися, а не бути вже імплементованим в HTML).
-// Вікно має мати кнопку для закривання самого себе, після чого його
-// HTML повинен бути видаленим з DOM-дерева.
-// * Реалізувати функціонал, який дозволяє створити декілька модальних
-// вікон і видалити їх у разі закриття конкретного вікна.
 // * Реалізувати анімацію за допомогою CSS3 при відкриванні і закриванні
 // модального вікна (плавна поява і плавне закривання вікна) 
-
-// add text (drag me)
-// add animation
 'use strict';
 
 // body node
@@ -45,7 +35,7 @@ open_button.style.fontSize = '4vh'; // for responsive text
 open_button.style.width = '20vh';
 open_button.style.height = '15vh';
 //  box styling
-open_button.style.backgroundColor = '#87CEEB';
+open_button.style.backgroundColor = '#FF7F50';
 open_button.style.border = '1px solid black';
 open_button.style.color = '#000';
 open_button.style.borderRadius = '5%';
@@ -75,7 +65,7 @@ function btnHoverEffectOn(item) {
 // button hover effect off
 function btnHoverEffectOff(item) {
     let btn = item.target;
-    btn.style.backgroundColor = '#87CEEB';
+    btn.style.backgroundColor = '#FF7F50';
     btn.style.color = '#000';
 }
 
@@ -89,7 +79,7 @@ function btnActivEffectOn(item) {
 // btn mouse down effect off + open modal window
 function btnActiveffectOff(item) {
     let btn = item.target;
-    btn.style.backgroundColor = '#87CEEB';
+    btn.style.backgroundColor = '#FF7F50';
     btn.style.color = '#000';
 
     // open modal window
@@ -111,6 +101,8 @@ function openModalWindow(item) {
     // else styles
     modalWindow.style.backgroundColor = randomColor();
     modalWindow.style.boxShadow = '0px 0px 7px 0px #000';
+    modalWindow.style.display = 'flex';
+    modalWindow.style.flexDirection = 'column';
 
     // random bg color for modal window
     function randomColor() {
@@ -154,6 +146,17 @@ function openModalWindow(item) {
     // add close btn to modal window
     modalWindow.append(close_btn);
 
+    // text for modal window
+    let modalWindowText = document.createElement('p');
+    modalWindowText.innerText = 'Drag me';
+    // style
+    modalWindowText.style.margin = '0';
+    modalWindowText.style.fontFamily = 'Roboto';
+    modalWindowText.style.fontSize = '4vh';
+
+    // add text to modal window 
+    modalWindow.append(modalWindowText);
+
 
     // drag & drop -----
     modalWindow.setAttribute('draggable', 'true');
@@ -181,6 +184,3 @@ function openModalWindow(item) {
     // add to container
     container.append(modalWindow);
 }
-
-// debug
-// console.log(container.lastChild)
